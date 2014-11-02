@@ -1,0 +1,26 @@
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Minimal BubbleTree Demo</title>
+  <script type="text/javascript" src="lib/jquery-1.5.2.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.history.js"></script>
+  <script type="text/javascript" src="lib/raphael.js"></script>
+  <script type="text/javascript" src="lib/vis4.js"></script>
+  <script type="text/javascript" src="lib/Tween.js"></script>
+  <script type="text/javascript" src="build/bubbletree.js"></script>
+  <link rel="stylesheet" type="text/css" href="build/bubbletree.css" />  
+  <script type="text/javascript">
+ 
+    $(function () {
+      new BubbleTree({
+        data: data,
+        container: '.bubbletree'
+      });
+    });
+</script></head>
+<body>
+  <div class="bubbletree-wrapper">
+    <div class="bubbletree"></div>
+  </div>
+</body>
+</html>
