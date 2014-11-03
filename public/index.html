@@ -13,19 +13,31 @@
   <script type="text/javascript">
  
     $(function () {
-      var  rootNode = { //http://clients.driven-by-data.net/okfn/bubbletree/
-        label: "Total budget", 
+
+      function generateChildren(node) {
+        var numChildren = 8;
+        node.children = [];
+        var amount = node.amount;
+        for (var i=0; i<numChildren ; i++) {
+            var child = { 
+              label: 'Child #'+(i+1), 
+              amount: i+1 < numChildren ? 
+                amount*Math.random()*0.6 : amount
+            };
+            amount -= child.amount;
+            node.children.push(child);
+        }
+      }
+       
+      var data = {
+        label: "I am a node",
         amount: 1000000,
-        children: [{
-            label: "Health",
-            amount: 650000
-        }, {
-            label: "Government",
-            amount: 350000
-        }]
       };
+
+      generateChildren(data);
+
       new BubbleTree({
-        data: rootNode,
+        data: data,
         container: '.bubbletree'
       });
     });
