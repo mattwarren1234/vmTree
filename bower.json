@@ -1,0 +1,24 @@
+{
+  "name": "BubbleTree",
+  "version": "0.0.0",
+  "authors": [
+    "Matt Warren <mattwarrenmail@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "mattwarren1234.github.io",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jQuery": "~2.1.1",
+    "raphael": "~2.1.2",
+    "tweenjs": "*"
+  }
+}
