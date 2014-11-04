@@ -1,6 +1,6 @@
 var vmApi = require('../services/vmApi.js');
 
-describe('helloworld', function(){
+xdescribe('helloworld', function(){
   it('should get response of hello world!', function(done){
     vmApi.helloWorld()
       .then(function(data){

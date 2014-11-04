@@ -5,14 +5,10 @@ describe('Wsse', function() {
   describe('getNonce', function() {
 
     it('works', function(done) {
-      expect(wsse).toBeDefined();
-      // expect(wsse.getNonce).toBeDefined();
-      // var nonce = wsse.getNonce();
-      // expect(nonce.created).toBeDefined();
-      // expect(nonce).toBeDefined();
+      var nonce = wsse.getNonce();
+      expect(nonce.created).toBeDefined();
       done();
     });
-
   });
 
   describe('getPasswordDigest', function() {
