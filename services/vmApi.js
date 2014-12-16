@@ -8,16 +8,27 @@ var privateKey = require('./privateKey');
 
 var helloWorld = function(){
   var request = require('request');
+  // &key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
+  // {name:VolunteerMatch},
   return new Promise(function(resolve, reject){
-    var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        resolve(body);
-      } else {
-        reject(error);
-      }
+   // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
+   // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
+  var baseUrl = "http://www.volunteermatch.org/api/call";
+  var helloWorld = "?action=helloWorld&key="+privateKey.key;
+  var helloWorldParams = {};
+  helloWorldParams.name = "test";
+  var url = baseUrl + helloWorld + "&query=" + encodeURI(JSON.stringify(helloWorldParams));
+  console.log("URL : " + url);
+  console.log("encode works?");
+  console.log(encodeURI);
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      resolve(body); 
+    } else {
+      reject(error);
+    }
     });
-   });
+  });
   // var authString = createDigest(); 
   // var action = 'getKeyStatus';
   // var staticAction = "?action="+action+"";

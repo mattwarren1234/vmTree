@@ -1,3 +1,6 @@
+//TAKEN FROM https://github.com/bouzuya/node-wsse/blob/master/test/wsse.js
+//so i have local reference for wsse api.
+
 var wsse = require('wsse')();
 // http://www.xml.com/pub/a/2003/12/17/dive.html
 
@@ -7,6 +10,8 @@ describe('Wsse', function() {
     it('works', function(done) {
       var nonce = wsse.getNonce();
       expect(nonce.created).toBeDefined();
+      expect(nonce.nonce).toBeDefined();
+
       done();
     });
   });

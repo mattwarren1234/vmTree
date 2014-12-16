@@ -13,7 +13,7 @@ describe('helloWorld', function(){
     it ('function defined', function(){
         expect(vmApi.helloWorld).toBeDefined();
     });
-    it ('async works', function(done){
+    it ('returns json object response', function(done){
         vmApi.helloWorld().
             then(function(response){
                 expect(isJSON(response)).toBe(true);
