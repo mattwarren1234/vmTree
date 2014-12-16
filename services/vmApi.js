@@ -14,13 +14,14 @@ var helloWorld = function(){
    // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
    // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
   var baseUrl = "http://www.volunteermatch.org/api/call";
-  var helloWorld = "?action=helloWorld&key="+privateKey.key;
-  var helloWorldParams = {};
-  helloWorldParams.name = "test";
-  var url = baseUrl + helloWorld + "&query=" + encodeURI(JSON.stringify(helloWorldParams));
-  console.log("URL : " + url);
-  console.log("encode works?");
-  console.log(encodeURI);
+  var queryParams = {};
+  queryParams.name = "test";
+  var helloWorld = qs.stringify({
+    action : 'helloWorld',
+    key : privateKey.key,
+    query : encodeURI(JSON.stringify(queryParams))
+  });
+  var url = baseUrl + '?' + helloWorld;
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       resolve(body); 
