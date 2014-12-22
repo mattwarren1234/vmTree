@@ -17,9 +17,9 @@ var buildQuery = function(action, searchOptions){
   return baseUrl + '?' + querystring;
 };
 
-var searchOrgs = function(){
+var searchOrganizations = function(criteria){
   var action = "searchOrganizations";
-  var searchOptions = {};
+  var searchOptions = criteria;
   var options = buildQuery(action, searchOptions);
   return new Promise(function (resolve, reject) {
     request(options, function (error, response, body) {
@@ -68,5 +68,5 @@ var helloWorld = function(){
 
 exports.getCategories = getCategories;
 exports.buildQuery = buildQuery;
-exports.searchOrgs = searchOrgs;
+exports.searchOrganizations = searchOrganizations;
 exports.helloWorld = helloWorld;

@@ -3,28 +3,47 @@
 var vmApi = require('../services/vmApi.js');
 
 var isJSON = function(input){
+    //takes STRING as input. determines if valid json
     try {
         JSON.parse(input);
         return true;
     } catch (err){
+        console.log('ERROR CAUGHT : ' + err);
         return false;
     }
 };
-describe('query builder', function(){
+xdescribe('query builder', function(){
     it('should return string', function(){
         expect(vmApi.buildQuery).toBeDefined();
         var action = "getMetaData";
         var options = {version : 1};
         expect(typeof vmApi.buildQuery(action, options)).toBe('string');
-        console.log('query: ');
         console.log(vmApi.buildQuery(action, options));
     });
 });
 
-describe('getCategories', function(){
+xdescribe('getCategories', function(){
     it('should ', function(done){
         expect(vmApi.getCategories).toBeDefined();
         vmApi.getCategories().
+            then(function(response){
+                expect(response).toBeDefined();
+                done();
+            });
+    });
+});
+
+describe('searchOrganizations', function(){
+    it('should ', function(done){
+        var searchCriteria = {
+            "location" : "94108",
+            "nbOfResults": 10,
+            "pageNumber": 3,
+            "fieldsToDisplay": [ "name", "location" ],
+            "names" : [ "red cross" ]
+        };
+        expect(vmApi.searchOrganizations).toBeDefined();
+        vmApi.searchOrganizations(searchCriteria).
             then(function(response){
                 expect(response).toBeDefined();
                 console.log(response);
