@@ -1,3 +1,4 @@
+'use strict';
 var request = require('request');
 var wsse = require('wsse')();
 var http = require('http');
@@ -6,23 +7,56 @@ var sha256 = require('sha256');
 var btoa = require('btoa');
 var privateKey = require('./privateKey');
 
+var buildQuery = function(action, searchOptions){
+  var baseUrl = "http://www.volunteermatch.org/api/call";
+  var querystring = qs.stringify({
+    action : action,
+    key : privateKey.key,
+    query : encodeURI(JSON.stringify(searchOptions))
+  });
+  return baseUrl + '?' + querystring;
+};
+
+var searchOrgs = function(){
+  var action = "searchOrganizations";
+  var searchOptions = {};
+  var options = buildQuery(action, searchOptions);
+  return new Promise(function (resolve, reject) {
+    request(options, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        resolve(body); 
+      } else {
+        reject(error);
+      }
+    });
+  });
+};
+
+var getCategories = function(){
+  // http://www.volunteermatch.org/api/call?action=getMetadata
+  var action = "getMetaData";
+  var queryOptions = {version : 1};
+  var options = buildQuery(action, queryOptions);
+  return new Promise(function (resolve, reject) {
+    request(options, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        resolve(body); 
+      } else {
+        reject(error);
+      }
+    });
+  });
+};
+
 var helloWorld = function(){
   var request = require('request');
-  // &key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
-  // {name:VolunteerMatch},
   return new Promise(function(resolve, reject){
-   // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
-   // var url = "http://www.volunteermatch.org/api/call?action=helloWorld&key=4dfbf57a80fc42d72f76f8759d052e85&query=%7B%22name%22:%22VolunteerMatch%22%7D";
-  var baseUrl = "http://www.volunteermatch.org/api/call";
-  var queryParams = {};
-  queryParams.name = "test";
-  var helloWorld = qs.stringify({
-    action : 'helloWorld',
-    key : privateKey.key,
-    query : encodeURI(JSON.stringify(queryParams))
-  });
-  var url = baseUrl + '?' + helloWorld;
-  request(url, function (error, response, body) {
+  var queryParams = {
+    name: "test"
+  };
+  var action= 'helloWorld'; 
+  var options = buildQuery(action, queryParams);
+  request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       resolve(body); 
     } else {
@@ -30,25 +64,9 @@ var helloWorld = function(){
     }
     });
   });
-  // var authString = createDigest(); 
-  // var action = 'getKeyStatus';
-  // var staticAction = "?action="+action+"";
-  // var staticQuery = "&query=%7B%22name%22:%22VolunteerMatch%22%7D"; //copied from an example
-  // var staticKey = "&key=4dfbf57a80fc42d72f76f8759d052e85";
-  // var url = "http://www.volunteermatch.org/api/call";
-  // url += staticAction;
-  // url += staticQuery;
-  // url += staticKey;
-  // return new Promise(function(resolve, reject){
-  //   var callback = function(error, response, body){
-  //     resolve(body);
-  //   };
-  //   var options = {
-  //   url: url
-  // };
-  //   request(options, callback);
-  // });
-
 };
 
+exports.getCategories = getCategories;
+exports.buildQuery = buildQuery;
+exports.searchOrgs = searchOrgs;
 exports.helloWorld = helloWorld;
