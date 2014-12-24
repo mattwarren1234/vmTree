@@ -36,6 +36,10 @@
 
       generateChildren(data);
 
+      $.get('/api/categories', function(data){
+        alert(data);
+      });
+
       new BubbleTree({
         data: data,
         container: '.bubbletree'

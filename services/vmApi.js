@@ -1,4 +1,3 @@
-'use strict';
 var request = require('request');
 var wsse = require('wsse')();
 var http = require('http');
@@ -6,6 +5,7 @@ var qs = require('querystring');
 var sha256 = require('sha256');
 var btoa = require('btoa');
 var privateKey = require('./privateKey');
+'use strict';
 
 var buildQuery = function(action, searchOptions){
   var baseUrl = "http://www.volunteermatch.org/api/call";
@@ -21,7 +21,7 @@ var searchOrganizations = function(criteria){
   var action = "searchOrganizations";
   var searchOptions = criteria;
   var options = buildQuery(action, searchOptions);
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) { 
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         resolve(body); 

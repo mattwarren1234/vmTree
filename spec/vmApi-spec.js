@@ -38,15 +38,13 @@ describe('searchOrganizations', function(){
         var searchCriteria = {
             "location" : "94108",
             "nbOfResults": 10,
-            "pageNumber": 3,
-            "fieldsToDisplay": [ "name", "location" ],
+            "fieldsToDisplay": [ "name", "location", "url" ],
             "names" : [ "red cross" ]
         };
         expect(vmApi.searchOrganizations).toBeDefined();
         vmApi.searchOrganizations(searchCriteria).
             then(function(response){
                 expect(response).toBeDefined();
-                console.log(response);
                 done();
             });
     });
