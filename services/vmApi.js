@@ -25,7 +25,7 @@ var searchOrganizations = function(criteria){
   return new Promise(function (resolve, reject) { 
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        resolve(body); 
+        resolve(JSON.parse(body)); 
       } else {
         reject(error);
       }
@@ -37,12 +37,10 @@ var searchOpportunities = function(criteria){
   var action = "searchOpportunities";
   var searchOptions = criteria;
   var options = buildQuery(action, searchOptions);
-  // console.log('url is ' + options);
-  // console.log(options);
   return new Promise(function (resolve, reject) { 
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        resolve(body); 
+        resolve(JSON.parse(body)); 
       } else {
         reject(error);
       }
@@ -58,7 +56,7 @@ var getCategories = function(){
   return new Promise(function (resolve, reject) {
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        resolve(body); 
+        resolve(JSON.parse(body)); 
       } else {
         reject(error);
       }

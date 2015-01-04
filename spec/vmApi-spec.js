@@ -39,11 +39,13 @@ xdescribe('query builder', function(){
 });
 
 describe('getCategories', function(){
-    it('should ', function(done){
+    it('should have categories array and version number', function(done){
         expect(vmApi.getCategories).toBeDefined();
         vmApi.getCategories().
             then(function(response){
-                expect(response).toBeDefined();
+                expect(typeof response.categories).toBe('object');
+                expect(response.categories.length).toBeGreaterThan(0);
+                expect(response.version).toBeGreaterThan(0);
                 done();
             });
     });
@@ -60,14 +62,13 @@ describe('searchOrganizations', function(){
         "location" : "92117",
         "fieldsToDisplay": [ "name", "location", "url" ],
     };
-    it('should ', function(done){
+    it('should have resultsSize', function(done){
         var searchCriteria = manySearch;
         expect(vmApi.searchOrganizations).toBeDefined();
         vmApi.searchOrganizations(searchCriteria).
             then(function(response){
                 expect(response).toBeDefined();
-                expect(isJSON(response)).toBe(true);
-                expect(JSON.parse(response).resultsSize).toBeGreaterThan(-1);
+                expect(response.resultsSize).toBeGreaterThan(-1);
                 done();
             });
     });
@@ -89,10 +90,10 @@ describe('searchOpportunities', function(){
         vmApi.searchOpportunities(searchCriteria).
             then(function(response){
                 expect(response).toBeDefined();
-                expect(isJSON(response)).toBe(true);
-                var result = JSON.parse(response);
-                expect(result.resultsSize).toBeGreaterThan(-1);
-                console.log("search opps: total results " + result.resultsSize);
+                // expect(isJSON(response)).toBe(true);
+                // var result = JSON.parse(response);
+                expect(response.resultsSize).toBeGreaterThan(-1);
+                console.log("search opps: total results " + response.resultsSize);
                 done();
             });
     });
@@ -112,15 +113,12 @@ describe('searchOpportunities', function(){
 
         vmApi.searchOpportunities(virtualParams)
             .then(function(response){
-                expect(isJSON(response)).toBe(true);
-                var result = JSON.parse(response);
-                expect(result.resultsSize).toBeGreaterThan(-1);
-                count1 = result.resultsSize;
+                expect(response.resultsSize).toBeGreaterThan(-1);
+                count1 = response.resultsSize;
             })
             .then(function(){ return vmApi.searchOpportunities(nonVirtualParams); })
             .then(function(response){
-                var result = JSON.parse(response);
-                count2 = result.resultsSize;
+                count2 = response.resultsSize;
                 expect(count1).not.toEqual(count2);
                 done();
             });
@@ -131,13 +129,11 @@ describe('searchOpportunities', function(){
         // search.fieldsToDisplay = ["title", "location","vmUrl"];
         vmApi.searchOpportunities(search)
             .then(function(response){
-                expect(isJSON(response)).toBe(true);
-                var result = JSON.parse(response);
-                var opp = result.opportunities[0];
+                var opp = response.opportunities[0];
                 expect(opp.vmUrl).toBeDefined();
                 expect(opp.title).toBeDefined();
                 expect(opp.location).toBeDefined();
-                expect(result.opportunities).toBeDefined();  //array with props availability, categoryIds
+                expect(response.opportunities).toBeDefined();  //array with props availability, categoryIds
                 done();
             });
     });
@@ -147,7 +143,7 @@ describe('searchOpportunities', function(){
         search.numberOfResults = numResults;
         vmApi.searchOpportunities(search)
             .then(function(response){
-                var results = JSON.parse(response).opportunities;
+                var results = response.opportunities;
                 console.log('number of results : ' + results.length + ' expected : ' + numResults);
                 expect(results.length).toEqual(numResults);
                 done();
