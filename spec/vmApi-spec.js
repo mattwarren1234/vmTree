@@ -80,20 +80,13 @@ describe('searchOpportunities', function(){
         "location" : "92117",
         "radius":"2"
     };
-        // "numberOfResults": "2",
-        // "fieldsToDisplay": ["title"],
-        // "categoryIds" : ["11","17"]
     it('should return list of opps', function(done){
-        // var searchCriteria = testSearch;
-        console.log('search criteria ');
         var searchCriteria = clone(testSearch);
         vmApi.searchOpportunities(searchCriteria).
             then(function(response){
-                expect(response).toBeDefined();
-                // expect(isJSON(response)).toBe(true);
-                // var result = JSON.parse(response);
                 expect(response.resultsSize).toBeGreaterThan(-1);
-                console.log("search opps: total results " + response.resultsSize);
+                expect(response.opportunities.length).toBeGreaterThan(0);
+                expect(typeof response.opportunities).toBe('object');
                 done();
             });
     });
