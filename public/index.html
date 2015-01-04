@@ -13,7 +13,6 @@
   <script type="text/javascript">
  
     $(function () {
-
       function generateChildren(node) {
         var numChildren = 8;
         node.children = [];
@@ -28,22 +27,43 @@
             node.children.push(child);
         }
       }
-       
+      var maxAmt = 1000000;
       var data = {
-        label: "I am a node",
+        label: "All opportunities",
         amount: 1000000,
       };
 
-      generateChildren(data);
+      // generateChildren(data);
+      $('.bubbletree').html('<h1>loading...</h1>');
+      // generateChildren(data);
+      $.get('/api/categories', function(catData){
+        var categories = JSON.parse(catData).categories;
+        var debugMode = true;
+        if (debugMode){
+          categories = categories.slice(0, 20);
+        }
+        data.children = [];
+        setTimeout(function(){
+          var children = categories.map(function(cat){
+            var newNode = {};
+            newNode.children = [];
+            newNode.label = cat.name;
+            newNode.amount = maxAmt * Math.random() * 0.1;
+            return newNode;
+          });
+          children.forEach(function(child){
+            data.children.push(child);
+          });
 
-      $.get('/api/categories', function(data){
-        alert(data);
+        }, 3000);
+        //each category has id and name
+        
+        new BubbleTree({
+          data: data,
+          container: '.bubbletree'
+        });
       });
 
-      new BubbleTree({
-        data: data,
-        container: '.bubbletree'
-      });
     });
 </script></head>
 <body>
