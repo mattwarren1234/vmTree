@@ -42,6 +42,9 @@ var searchOpportunities = function(criteria){
       if (!error && response.statusCode == 200) {
         resolve(JSON.parse(body)); 
       } else {
+        console.log('search resolved error');
+        console.log(error);
+        console.log(response.statusCode);
         reject(error);
       }
     });

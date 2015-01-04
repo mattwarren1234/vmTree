@@ -42,10 +42,10 @@ describe('getCategories', function(){
     it('should have categories array and version number', function(done){
         expect(vmApi.getCategories).toBeDefined();
         vmApi.getCategories().
-            then(function(response){
-                expect(typeof response.categories).toBe('object');
-                expect(response.categories.length).toBeGreaterThan(0);
-                expect(response.version).toBeGreaterThan(0);
+            then(function(data){
+                expect(typeof data.categories).toBe('object');
+                expect(data.categories.length).toBeGreaterThan(0);
+                expect(data.version).toBeGreaterThan(0);
                 done();
             });
     });
@@ -77,8 +77,8 @@ describe('searchOrganizations', function(){
 describe('searchOpportunities', function(){
     //title, type, location, availability, parentOrg, beneficiary, description, plaintextDescription, skillsNeeded, plaintextSkillsNeeded, volunteersNeeded, spacesAvailable, minimumAge, numReferred, requiresAddress, categoryIds, referralFields, imageUrl, created, updated, allowGroupInvitations, allowGroupReservation, hasWaitList, status, tags, virtual, vmUrl, requirements
     var testSearch = {
-        "location" : "92117",
-        "radius":"2"
+        location : "92117",
+        radius:"2"
     };
     it('should return list of opps', function(done){
         var searchCriteria = clone(testSearch);
@@ -116,10 +116,8 @@ describe('searchOpportunities', function(){
                 done();
             });
     });
-    it('opportunities should be defined', function(done){
-        // var searchCriteria = testSearch;
+    it('opportunities should have title, location, vmUrl', function(done){
         var search = clone(testSearch);
-        // search.fieldsToDisplay = ["title", "location","vmUrl"];
         vmApi.searchOpportunities(search)
             .then(function(response){
                 var opp = response.opportunities[0];
